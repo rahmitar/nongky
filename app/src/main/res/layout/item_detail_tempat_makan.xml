@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="item"
+            type="com.noobee.nongky.model.Data" />
+
+        <variable
+            name="viewModel"
+            type="com.noobee.nongky.ui.home.HomeViewModel" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="224dp"
+        android:layout_height="232dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="8dp"
+        android:elevation="8dp"
+        android:onClick="@{() -> viewModel.itemCafeOnClick(position)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_detail_grid"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:scaleType="centerCrop"
+                android:src="@color/pink"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadImageFromUrl="@{item.c_profile}"/>
+
+            <TextView
+                android:id="@+id/tv_grid_nama_tempat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="16dp"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_detail_grid"
+                tools:text="@{item.c_name}"
+                tools:textColor="@android:color/black" />
+
+            <ImageView
+                android:id="@+id/iv_loc"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="@id/tv_grid_nama_tempat"
+                app:layout_constraintTop_toBottomOf="@id/tv_grid_nama_tempat" />
+
+            <TextView
+                android:id="@+id/tv_jarak"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="16dp"
+                android:maxLength="64"
+                app:layout_constraintEnd_toEndOf="@id/tv_grid_nama_tempat"
+                app:layout_constraintStart_toEndOf="@id/iv_loc"
+                app:layout_constraintTop_toBottomOf="@id/tv_grid_nama_tempat"
+                app:layout_constraintTop_toTopOf="@id/iv_loc"
+                tools:text="5.0 KM" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

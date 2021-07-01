@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Nongky</string>
+
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="help">Help</string>
+
+    <string name="tv_home1">Daftar Tempat Makan</string>
+    <string name="tv_home2">Show All</string>
+    <string name="tv_home3">Fitur</string>
+
+</resources>

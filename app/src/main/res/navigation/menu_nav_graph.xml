@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.noobee.nongky.ui.help.HelpFragment"
+        android:label="HelpFragment" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.noobee.nongky.ui.maps.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.noobee.nongky.ui.home.HomeFragment"
+        android:label="HomeFragment" />
+</navigation>
