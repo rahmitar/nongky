@@ -21,12 +21,13 @@ class HomeViewModel @Inject constructor(
     val cafeRepository: CafeRepository
 ) : BaseViewModel() {
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
     companion object {
         const val ACTION_HOME_TIMEOUT = "action_home_timeout"
         const val ACTION_HOME_ITEMUPDATE = "action_home_itemupdate"
         const val ACTION_HOME_ITEMONCLICK = "action_home_itemonclick"
+        const val ACTION_HOME_CAFE = "action_home_cafe"
+        const val ACTION_HOME_RESTO = "action_home_resto"
+        const val ACTION_HOME_LAINNYA = "action_home_lainnya"
     }
 
     val listCafe = ArrayList<Data>()
@@ -48,9 +49,13 @@ class HomeViewModel @Inject constructor(
 
                     listCafe.clear()
                     response.dataResource?.data?.forEach { item ->
-//                        item.c_distance = haversine()
+                        item.c_distance = haversine(latitudeUser.value?: 0.0, longitudeUser.value?: 0.0, item.c_coordinate)
                         listCafe.add(item)
                     }
+                    listCafe.sortBy {
+                        it.c_distance
+                    }
+                    listCafe.take(10)
                     action.postValue(ACTION_HOME_ITEMUPDATE)
                 }
                 is Resource.Error -> {
@@ -66,5 +71,16 @@ class HomeViewModel @Inject constructor(
         action.value = ACTION_HOME_ITEMONCLICK
     }
 
+    fun buttonCafeOnClick(){
+        action.value = ACTION_HOME_CAFE
+    }
+
+    fun buttonRestoOnClick(){
+        action.value = ACTION_HOME_RESTO
+    }
+
+    fun buttonLainnyaOnClick(){
+        action.value = ACTION_HOME_LAINNYA
+    }
 
 }

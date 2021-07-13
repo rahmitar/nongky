@@ -26,9 +26,13 @@ class MapViewModel @Inject constructor(
 
     val listTitikCafe = ArrayList<Data>()
     val areListReady = MutableLiveData<Boolean>()
+    val latitudeUser = MutableLiveData<Double>()
+    val longitudeUser = MutableLiveData<Double>()
 
     init {
         areListReady.value = false
+        latitudeUser.value = 0.0
+        longitudeUser.value = 0.0
     }
 
     fun getSemuaTitik() {
@@ -39,9 +43,14 @@ class MapViewModel @Inject constructor(
                     when(response.dataResource?.status){
                         HttpURLConnection.HTTP_OK -> {
                             response.dataResource.data?.forEach {
-                                listTitikCafe.add(it)
-                                areListReady.postValue(true)
+                                it.c_distance = haversine(latitudeUser.value?:0.0,longitudeUser.value?:0.0,it.c_coordinate)
+
+                                if(it.c_distance?: 0.0 <= 2.0){
+                                    listTitikCafe.add(it)
+                                }
+
                             }
+                            areListReady.postValue(true)
                         }
                     }
                 }
@@ -51,4 +60,6 @@ class MapViewModel @Inject constructor(
             }
         }
     }
+
+
 }

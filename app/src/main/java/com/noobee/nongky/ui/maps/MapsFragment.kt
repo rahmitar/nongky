@@ -1,10 +1,12 @@
 package com.noobee.nongky.ui.maps
 
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,10 +18,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.noobee.nongky.R
 import com.noobee.nongky.databinding.FragmentMapsBinding
 import com.noobee.nongky.util.Util
@@ -129,6 +128,18 @@ class MapsFragment : Fragment() {
                 val user = LatLng(it.latitude, it.longitude)
                 googleMap.addMarker(MarkerOptions().position(user).title("Marker in Sydney"))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(user, 13.5f))
+                //Toast.makeText(this.requireContext(), "user lat: ${it.latitude} long: ${it.longitude} "  , Toast.LENGTH_LONG).show()
+                mapViewModel.latitudeUser.value = it.latitude
+                mapViewModel.longitudeUser.value = it.longitude
+
+                googleMap.addCircle(
+                    CircleOptions()
+                        .center(LatLng(it.latitude, it.longitude))
+                        .radius(2000.0)
+                        .strokeWidth(5f)
+                        .strokeColor(Color.BLUE)
+                        .fillColor(Color.argb(128, 0, 0, 255))
+                )
             }
         }
     }

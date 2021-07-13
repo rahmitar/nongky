@@ -1,5 +1,6 @@
 package com.noobee.nongky.ui.home
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,11 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.noobee.nongky.R
 import com.noobee.nongky.databinding.FragmentHomeBinding
+import com.noobee.nongky.ui.list.ListKategoriActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         homeFragmentBinding.apply {
             lifecycleOwner = this@HomeFragment
+            viewModel = homeViewModel
         }
 
         homeViewModel.action.observe(viewLifecycleOwner, Observer { action ->
@@ -50,9 +51,35 @@ class HomeFragment : Fragment() {
                 HomeViewModel.ACTION_HOME_ITEMUPDATE -> listItemUpdate()
                 HomeViewModel.ACTION_HOME_ITEMONCLICK -> cafeItemOnClick()
                 HomeViewModel.ACTION_HOME_TIMEOUT -> connectionTimeOut()
+                HomeViewModel.ACTION_HOME_CAFE -> buttonCafeOnClick()
+                HomeViewModel.ACTION_HOME_RESTO -> buttonRestoOnClick()
+                HomeViewModel.ACTION_HOME_LAINNYA -> buttonLainnyaOnClick()
+
             }
         })
+        getLocationPermission()
         homeViewModel.setList()
+    }
+
+    private fun buttonLainnyaOnClick() {
+        val intent = Intent(requireContext(), ListKategoriActivity::class.java)
+        intent.putExtra(ListKategoriActivity.EXTRA_KATEGORI, "lainnya")
+
+        startActivity(intent)
+    }
+
+    private fun buttonRestoOnClick() {
+        val intent = Intent(requireContext(), ListKategoriActivity::class.java)
+        intent.putExtra(ListKategoriActivity.EXTRA_KATEGORI, "resto")
+
+        startActivity(intent)
+    }
+
+    private fun buttonCafeOnClick() {
+        val intent = Intent(requireContext(), ListKategoriActivity::class.java)
+        intent.putExtra(ListKategoriActivity.EXTRA_KATEGORI, "cafe")
+
+        startActivity(intent)
     }
 
     private fun cafeItemOnClick() {
@@ -95,9 +122,12 @@ class HomeFragment : Fragment() {
         task.addOnSuccessListener {
             it?.let {
                 val user = LatLng(it.latitude, it.longitude)
-                val usrLat = it.latitude
-                val usrLon = it.longitude
+                homeViewModel.latitudeUser.value = it.latitude
+                homeViewModel.longitudeUser.value = it.longitude
+                Toast.makeText(this.requireContext(), "user lat: ${it.latitude} long: ${it.longitude} "  , Toast.LENGTH_LONG).show()
             }
         }
     }
+
+
 }

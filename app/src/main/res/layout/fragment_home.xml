@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.noobee.nongky.ui.home.HomeViewModel" />
+    </data>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -61,6 +67,61 @@
                     app:layout_constraintTop_toBottomOf="@id/recyclerViewListHome"
                     android:text="@string/tv_home3"
                     android:layout_marginTop="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:onClick="@{()-> viewModel.buttonCafeOnClick()}"
+                    android:id="@+id/button_cafe"
+                    android:layout_width="300dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="16dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    app:icon="@drawable/ic_cafe"
+                    app:iconTint="@color/navyblue"
+                    app:iconPadding="16dp"
+                    android:text="@string/button_cafe"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/navyblue"
+                    app:layout_constraintTop_toBottomOf="@id/tv_home_3"
+                    app:layout_constraintStart_toStartOf="@id/tv_home_3"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:onClick="@{()-> viewModel.buttonRestoOnClick()}"
+                    android:id="@+id/button_resto"
+                    android:layout_width="300dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    app:icon="@drawable/ic_restaurant"
+                    app:iconTint="@color/navyblue"
+                    app:iconPadding="16dp"
+                    android:text="@string/button_resto"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/navyblue"
+                    app:layout_constraintTop_toBottomOf="@id/button_cafe"
+                    app:layout_constraintStart_toStartOf="@id/button_cafe"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:onClick="@{()-> viewModel.buttonLainnyaOnClick()}"
+                    android:id="@+id/button_kulinerlain"
+                    android:layout_width="300dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="8dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    app:icon="@drawable/ic_kulinerlain"
+                    app:iconTint="@color/navyblue"
+                    app:iconPadding="16dp"
+                    android:text="@string/button_lainnya"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/navyblue"
+                    app:layout_constraintTop_toBottomOf="@id/button_resto"
+                    app:layout_constraintStart_toStartOf="@id/button_resto"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>

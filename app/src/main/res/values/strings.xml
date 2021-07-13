@@ -7,6 +7,11 @@
 
     <string name="tv_home1">Daftar Tempat Makan</string>
     <string name="tv_home2">Show All</string>
-    <string name="tv_home3">Fitur</string>
+    <string name="tv_home3">Filter</string>
+    
+    <string name="button_cafe">Cafe Terdekat</string>
+    <string name="button_resto">Restoran Terdekat</string>
+    <string name="button_lainnya">Kuliner Lainnya</string>
+    
 
 </resources>

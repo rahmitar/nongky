@@ -3,6 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="item"
+            type="com.noobee.nongky.model.Data" />
+
+        <variable
+            name="viewModel"
+            type="com.noobee.nongky.ui.list.ListKategoriViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +37,7 @@
             android:elevation="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:loadImageFromUrl="@{item.c_profile}" />
 
         <TextView
             android:id="@+id/tv_list_nama_tempat"
@@ -33,7 +47,7 @@
             app:layout_constraintStart_toEndOf="@id/iv_list_tempat"
             app:layout_constraintTop_toTopOf="@id/iv_list_tempat"
             app:layout_constraintBottom_toTopOf="@id/tv_list_alamat"
-            android:text="Pak Itam Reborn"
+            android:text="@{item.c_name}"
             android:textSize="18sp"
             android:textStyle="bold"
             android:maxLength="64"
@@ -43,7 +57,7 @@
             android:id="@+id/tv_list_alamat"
             android:layout_width="212dp"
             android:layout_height="wrap_content"
-            android:text="Jalan Air Hitam, Payung Sekaki, Pekanbaru City, Riau"
+            android:text="@{item.c_address.name}"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@id/tv_list_nama_tempat"
             app:layout_constraintTop_toBottomOf="@id/tv_list_nama_tempat"
