@@ -9,7 +9,7 @@
 
         <variable
             name="item"
-            type="com.noobee.nongky.model.Data" />
+            type="com.noobee.nongky.model.DataCafe" />
 
         <variable
             name="viewModel"
@@ -20,9 +20,10 @@
     <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="224dp"
-        android:layout_height="232dp"
-        android:layout_marginHorizontal="8dp"
+        android:layout_width="320dp"
+        android:layout_height="300dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="2dp"
         android:layout_marginVertical="8dp"
         android:elevation="8dp"
         android:onClick="@{() -> viewModel.itemCafeOnClick(position)}">
@@ -34,7 +35,7 @@
             <ImageView
                 android:id="@+id/iv_detail_grid"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:src="@color/pink"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +49,7 @@
                 android:layout_marginHorizontal="18dp"
                 android:layout_marginTop="16dp"
                 android:textAppearance="?attr/textAppearanceHeadline6"
-                android:textSize="17sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_detail_grid"
@@ -57,8 +58,8 @@
 
             <ImageView
                 android:id="@+id/iv_loc"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_location"
@@ -70,19 +71,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="16dp"
                 app:layout_constraintStart_toEndOf="@id/iv_loc"
-                app:layout_constraintTop_toBottomOf="@id/tv_grid_nama_tempat"
                 app:layout_constraintTop_toTopOf="@id/iv_loc"
-                android:text="@{item.c_distance.toString()}" />
+                app:layout_constraintBottom_toBottomOf="@id/iv_loc"
+                android:text="@{item.c_distance.toString()}"
+                android:textSize="16sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/tv_jarak"
-                app:layout_constraintTop_toBottomOf="@id/tv_grid_nama_tempat"
                 app:layout_constraintTop_toTopOf="@id/iv_loc"
-                android:text="KM"/>
+                app:layout_constraintBottom_toBottomOf="@id/iv_loc"
+                android:textSize="16sp"
+                android:text=" KM"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

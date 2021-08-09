@@ -10,4 +10,5 @@
     <color name="navyblue">#12262F</color>
     <color name="pink">#F05454</color>
     <color name="whitegrey">#f7f7f7</color>
+    <color name="colorBackground">#f7f7f7</color>
 </resources>

@@ -1,14 +1,8 @@
 package com.noobee.nongky.ui.home
 
-import android.app.Activity
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
-import com.noobee.nongky.model.Data
+import com.noobee.nongky.model.DataCafe
 import com.noobee.nongky.repository.CafeRepository
 import com.noobee.nongky.ui.BaseViewModel
 import com.noobee.nongky.util.Resource
@@ -30,14 +24,16 @@ class HomeViewModel @Inject constructor(
         const val ACTION_HOME_LAINNYA = "action_home_lainnya"
     }
 
-    val listCafe = ArrayList<Data>()
+    val listCafe = ArrayList<DataCafe>()
     val actionItemPosition = MutableLiveData<Int>()
     val latitudeUser = MutableLiveData<Double>()
     val longitudeUser = MutableLiveData<Double>()
+    val isNearOneKilometers = MutableLiveData<Boolean>()
 
     init {
         latitudeUser.value = 0.0
         longitudeUser.value = 0.0
+        isNearOneKilometers.value = false
     }
 
     fun setList() {
@@ -45,18 +41,32 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             when (val response = cafeRepository.getDataCafe()) {
                 is Resource.Success -> {
+                    listCafe.clear()
+
+                    var countListCafe = 0
+                    response.dataResource?.data?.forEach { item ->
+                        item.c_distance = haversine(
+                            latitudeUser.value ?: 0.0,
+                            longitudeUser.value ?: 0.0,
+                            item.c_coordinate
+                        )
+
+                        item.c_distance?.let {
+                            if (it <= 1.00) {
+                                listCafe.add(item)
+                                countListCafe++
+                            }
+                        }
+                    }
+                    listCafe.sortBy { it.c_distance }
+                    listCafe.take(10)
+
+                    action.postValue(ACTION_HOME_ITEMUPDATE)
                     loadingEnabled.postValue(false)
 
-                    listCafe.clear()
-                    response.dataResource?.data?.forEach { item ->
-                        item.c_distance = haversine(latitudeUser.value?: 0.0, longitudeUser.value?: 0.0, item.c_coordinate)
-                        listCafe.add(item)
+                    if (countListCafe > 0) {
+                        isNearOneKilometers.postValue(true)
                     }
-                    listCafe.sortBy {
-                        it.c_distance
-                    }
-                    listCafe.take(10)
-                    action.postValue(ACTION_HOME_ITEMUPDATE)
                 }
                 is Resource.Error -> {
                     loadingEnabled.postValue(false)
@@ -71,15 +81,15 @@ class HomeViewModel @Inject constructor(
         action.value = ACTION_HOME_ITEMONCLICK
     }
 
-    fun buttonCafeOnClick(){
+    fun buttonCafeOnClick() {
         action.value = ACTION_HOME_CAFE
     }
 
-    fun buttonRestoOnClick(){
+    fun buttonRestoOnClick() {
         action.value = ACTION_HOME_RESTO
     }
 
-    fun buttonLainnyaOnClick(){
+    fun buttonLainnyaOnClick() {
         action.value = ACTION_HOME_LAINNYA
     }
 

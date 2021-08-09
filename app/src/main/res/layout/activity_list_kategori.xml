@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.noobee.nongky.ui.list.ListKategoriViewModel" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/card_shape"
+            android:drawableLeft="@drawable/ic_search"
+            android:hint="Search Here"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:visibility="@{viewModel.loadingEnabled ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewListKategori"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.loadingEnabled ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchBar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

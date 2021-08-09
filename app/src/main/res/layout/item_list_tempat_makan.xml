@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="position"
             type="Integer" />
 
         <variable
             name="item"
-            type="com.noobee.nongky.model.Data" />
+            type="com.noobee.nongky.model.DataCafe" />
 
         <variable
             name="viewModel"
@@ -20,23 +21,24 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/card_shape"
         android:elevation="4dp"
+        android:onClick="@{() -> viewModel.listKategoriOnClick(position)}"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="16dp"
-        >
+        android:paddingVertical="16dp">
 
         <ImageView
             android:id="@+id/iv_list_tempat"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:background="@drawable/card_shape"
-            android:src="@drawable/ic_home"
             android:elevation="3dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_home"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:loadImageFromUrl="@{item.c_profile}" />
 
         <TextView
@@ -44,14 +46,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            app:layout_constraintStart_toEndOf="@id/iv_list_tempat"
-            app:layout_constraintTop_toTopOf="@id/iv_list_tempat"
-            app:layout_constraintBottom_toTopOf="@id/tv_list_alamat"
+            android:maxLength="64"
             android:text="@{item.c_name}"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:maxLength="64"
-            />
+            app:layout_constraintBottom_toTopOf="@id/tv_list_alamat"
+            app:layout_constraintStart_toEndOf="@id/iv_list_tempat"
+            app:layout_constraintTop_toTopOf="@id/iv_list_tempat" />
 
         <TextView
             android:id="@+id/tv_list_alamat"
@@ -59,22 +60,30 @@
             android:layout_height="wrap_content"
             android:text="@{item.c_address.name}"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@id/tv_list_nama_tempat"
-            app:layout_constraintTop_toBottomOf="@id/tv_list_nama_tempat"
             app:layout_constraintBottom_toTopOf="@id/tv_list_jarak_tempat"
-            />
+            app:layout_constraintStart_toStartOf="@id/tv_list_nama_tempat"
+            app:layout_constraintTop_toBottomOf="@id/tv_list_nama_tempat" />
 
         <TextView
             android:id="@+id/tv_list_jarak_tempat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5 KM"
+            android:text="@{item.c_distance.toString()}"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_list_tempat"
             app:layout_constraintStart_toStartOf="@id/tv_list_nama_tempat"
             app:layout_constraintTop_toBottomOf="@id/tv_list_alamat"
-            app:layout_constraintBottom_toBottomOf="@id/iv_list_tempat"
-            />
+            tools:text="1.71" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" KM"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_list_jarak_tempat"
+            app:layout_constraintStart_toEndOf="@+id/tv_list_jarak_tempat"
+            app:layout_constraintTop_toTopOf="@+id/tv_list_jarak_tempat" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

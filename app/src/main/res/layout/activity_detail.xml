@@ -1,6 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</ConstraintLayout>
+    <data>
+
+        <variable
+            name="data"
+            type="com.noobee.nongky.model.DataCafe" />
+
+        <variable
+            name="viewModel"
+            type="com.noobee.nongky.ui.detail.DetailViewModel" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground">
+
+        <ImageView
+            android:id="@+id/panahkiri_katalog"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="20dp"
+            android:onClick="@{() -> viewModel.backButtonOnClick()}"
+            android:src="@drawable/ic_baseline_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_detail_nama_tempat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:maxLength="38"
+            android:text="@{data.c_name}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@id/panahkiri_katalog"
+            app:layout_constraintTop_toTopOf="@id/panahkiri_katalog"
+            tools:text="Peterseli Kitche Kitche Kitche Kitchen" />
+
+        <ImageView
+            android:id="@+id/iv_detail_profil_tempat"
+            loadImageFromUrl="@{data.c_profile}"
+            android:layout_width="0dp"
+            android:layout_height="392dp"
+            android:layout_margin="16dp"
+            android:src="@color/pink"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_nama_tempat" />
+
+        <ImageView
+            android:id="@+id/iv_loc"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_detail_profil_tempat" />
+
+        <TextView
+            android:id="@+id/tv_detail_alamat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:maxLines="2"
+            android:text="@{data.c_address.name + @string/generic_text(data.c_address.location.kelurahan.label, data.c_address.location.kecamatan.label, data.c_address.location.kota.label)}"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_loc"
+            app:layout_constraintEnd_toEndOf="@id/iv_detail_profil_tempat"
+            app:layout_constraintStart_toEndOf="@id/iv_loc"
+            app:layout_constraintTop_toTopOf="@id/iv_loc"
+            tools:text="Jl. Pattimura" />
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Deskripsi"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/iv_loc"
+            app:layout_constraintTop_toBottomOf="@id/iv_loc" />
+
+        <TextView
+            android:id="@+id/tv_detail_deskripsi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.descCafe}"
+            android:visibility="@{viewModel.loadingEnabled ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/iv_detail_profil_tempat"
+            app:layout_constraintStart_toStartOf="@id/tv_detail"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail"
+            tools:text="This Business Was Started From The Peterseli Kitchen Which Was Founded In 2014, This Restaurant Was Started From A Home Business Which Is Now Growing To Become A Large Group That Houses 6 Brands In The Food And Beverages Culinary Sector." />
+
+        <ProgressBar
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="@{viewModel.loadingEnabled ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/tv_kontak"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail" />
+
+        <TextView
+            android:id="@+id/tv_kontak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Kontak Kami"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/tv_detail_deskripsi"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_deskripsi" />
+
+        <ImageView
+            android:id="@+id/iv_logo_instagram"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_instagram"
+            app:layout_constraintStart_toStartOf="@id/tv_kontak"
+            app:layout_constraintTop_toBottomOf="@id/tv_kontak" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{data.c_contact.name}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_logo_instagram"
+            app:layout_constraintStart_toEndOf="@id/iv_logo_instagram"
+            app:layout_constraintTop_toTopOf="@id/iv_logo_instagram"
+            tools:text="peterseli.kitchen" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

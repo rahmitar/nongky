@@ -18,13 +18,14 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.noobee.nongky.R
 import com.noobee.nongky.databinding.FragmentHomeBinding
+import com.noobee.nongky.ui.detail.DetailActivity
 import com.noobee.nongky.ui.list.ListKategoriActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private lateinit var homeFragmentBinding : FragmentHomeBinding
+    private lateinit var homeFragmentBinding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var listDetailAdapter: RecyclerViewListDetailTempatMakanAdapter
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -35,7 +36,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         listDetailAdapter = RecyclerViewListDetailTempatMakanAdapter(homeViewModel)
-        homeFragmentBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false)
+        homeFragmentBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return homeFragmentBinding.root
     }
 
@@ -61,6 +63,11 @@ class HomeFragment : Fragment() {
         homeViewModel.setList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getLocationPermission()
+    }
+
     private fun buttonLainnyaOnClick() {
         val intent = Intent(requireContext(), ListKategoriActivity::class.java)
         intent.putExtra(ListKategoriActivity.EXTRA_KATEGORI, "lainnya")
@@ -83,7 +90,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun cafeItemOnClick() {
-        TODO("Not yet implemented")
+        try {
+
+            val positionItem = homeViewModel.actionItemPosition.value
+            val dataClick = positionItem?.let { homeViewModel.listCafe[it] }
+
+            val intent = Intent(requireActivity(), DetailActivity::class.java)
+
+            if (dataClick?.c_desc.isNullOrBlank() || dataClick?.c_feature.isNullOrEmpty()) {
+                dataClick?.c_desc = ""
+                dataClick?.c_feature = listOf()
+            }
+
+            intent.putExtra(DetailActivity.EXTRA_PARCEL_DETAIL, dataClick)
+            startActivity(intent)
+
+        } catch (e: NullPointerException) {
+            Toast.makeText(requireContext(), "Network Error", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun connectionTimeOut() {
@@ -116,15 +140,18 @@ class HomeFragment : Fragment() {
                 android.Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this.requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
+            ActivityCompat.requestPermissions(
+                this.requireActivity(),
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
             return
         }
         task.addOnSuccessListener {
             it?.let {
-                val user = LatLng(it.latitude, it.longitude)
                 homeViewModel.latitudeUser.value = it.latitude
                 homeViewModel.longitudeUser.value = it.longitude
-                Toast.makeText(this.requireContext(), "user lat: ${it.latitude} long: ${it.longitude} "  , Toast.LENGTH_LONG).show()
+//                Toast.makeText(requireContext(), "lat user : ${it.latitude}", Toast.LENGTH_SHORT).show()
             }
         }
     }

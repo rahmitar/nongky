@@ -1,6 +1,10 @@
 package com.noobee.nongky.model
 
-data class Data(
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class DataCafe(
     val _id: String,
     val c_address: CAddress,
     val c_category: String,
@@ -13,5 +17,7 @@ data class Data(
     val created_at: String,
     val fk_auth: String,
     val updated_at: String,
-    var c_distance: Double?
-)
+    var c_distance: Double?,
+    var c_desc: String = "",
+    var c_feature: List<Feature>
+) : Parcelable

@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.noobee.nongky.databinding.ItemDetailTempatMakanBinding
-import com.noobee.nongky.model.Data
+import com.noobee.nongky.model.DataCafe
 
 class RecyclerViewListDetailTempatMakanAdapter(
     val homeViewModel: HomeViewModel
 ) : RecyclerView.Adapter<RecyclerViewListDetailTempatMakanAdapter.ViewHolder>() {
 
-    var listItem: List<Data>? = null
+    var listItem: List<DataCafe>? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

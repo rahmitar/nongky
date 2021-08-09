@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.noobee.nongky.ui.home.HomeViewModel" />
+
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,108 +24,126 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/iv_logo_home"
                     android:layout_width="200dp"
                     android:layout_height="64dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
                     android:src="@drawable/logo"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginHorizontal="16dp"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_home_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/iv_logo_home"
-                    app:layout_constraintTop_toBottomOf="@id/iv_logo_home"
-                    android:text="@string/tv_home1"
-                    android:layout_marginTop="8dp"
                     android:layout_marginHorizontal="16dp"
-                    />
+                    android:layout_marginTop="8dp"
+                    android:text="@string/tv_home1"
+                    app:layout_constraintStart_toStartOf="@id/iv_logo_home"
+                    app:layout_constraintTop_toBottomOf="@id/iv_logo_home" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewListHome"
-                    android:layout_width= "match_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
+                    android:visibility="@{viewModel.isNearOneKilometers ? View.VISIBLE : View.INVISIBLE}"
                     app:layout_constraintStart_toStartOf="@id/tv_home_1"
-                    app:layout_constraintTop_toBottomOf="@id/tv_home_1"/>
+                    app:layout_constraintTop_toBottomOf="@id/tv_home_1" />
 
                 <TextView
-                    android:id="@+id/tv_home_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/tv_home_1"
+                    android:layout_marginTop="16dp"
+                    android:text="Tidak ada tempat kuliner disekitar sini"
+                    android:textStyle="bold"
+                    android:visibility="@{viewModel.isNearOneKilometers ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_home_3"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="@string/tv_home2"
-                    android:layout_marginHorizontal="24dp"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_home_1" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginVertical="16dp"
+                    android:visibility="@{viewModel.loadingEnabled ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/recyclerViewListHome"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/recyclerViewListHome" />
 
                 <TextView
                     android:id="@+id/tv_home_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="@id/recyclerViewListHome"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerViewListHome"
+                    android:layout_marginTop="16dp"
                     android:text="@string/tv_home3"
-                    android:layout_marginTop="8dp" />
+                    app:layout_constraintStart_toStartOf="@id/recyclerViewListHome"
+                    app:layout_constraintTop_toBottomOf="@id/recyclerViewListHome" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:onClick="@{()-> viewModel.buttonCafeOnClick()}"
                     android:id="@+id/button_cafe"
-                    android:layout_width="300dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:layout_width="0dp"
                     android:layout_height="64dp"
                     android:layout_marginTop="16dp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                    app:icon="@drawable/ic_cafe"
-                    app:iconTint="@color/navyblue"
-                    app:iconPadding="16dp"
+                    android:layout_marginRight="32dp"
+                    android:onClick="@{()-> viewModel.buttonCafeOnClick()}"
                     android:text="@string/button_cafe"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
                     android:textAlignment="viewStart"
+                    android:textAllCaps="false"
                     android:textColor="@color/navyblue"
-                    app:layout_constraintTop_toBottomOf="@id/tv_home_3"
-                    app:layout_constraintStart_toStartOf="@id/tv_home_3"/>
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_cafe"
+                    app:iconPadding="16dp"
+                    app:iconTint="@color/navyblue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tv_home_3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_home_3" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:onClick="@{()-> viewModel.buttonRestoOnClick()}"
                     android:id="@+id/button_resto"
-                    android:layout_width="300dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:layout_width="0dp"
                     android:layout_height="64dp"
                     android:layout_marginTop="8dp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                    app:icon="@drawable/ic_restaurant"
-                    app:iconTint="@color/navyblue"
-                    app:iconPadding="16dp"
+                    android:onClick="@{()-> viewModel.buttonRestoOnClick()}"
                     android:text="@string/button_resto"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
                     android:textAlignment="viewStart"
+                    android:textAllCaps="false"
                     android:textColor="@color/navyblue"
-                    app:layout_constraintTop_toBottomOf="@id/button_cafe"
-                    app:layout_constraintStart_toStartOf="@id/button_cafe"/>
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_restaurant"
+                    app:iconPadding="16dp"
+                    app:iconTint="@color/navyblue"
+                    app:layout_constraintEnd_toEndOf="@id/button_cafe"
+                    app:layout_constraintStart_toStartOf="@id/button_cafe"
+                    app:layout_constraintTop_toBottomOf="@id/button_cafe" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:onClick="@{()-> viewModel.buttonLainnyaOnClick()}"
                     android:id="@+id/button_kulinerlain"
-                    android:layout_width="300dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:layout_width="0dp"
                     android:layout_height="64dp"
                     android:layout_marginTop="8dp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                    app:icon="@drawable/ic_kulinerlain"
-                    app:iconTint="@color/navyblue"
-                    app:iconPadding="16dp"
+                    android:onClick="@{()-> viewModel.buttonLainnyaOnClick()}"
                     android:text="@string/button_lainnya"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
                     android:textAlignment="viewStart"
+                    android:textAllCaps="false"
                     android:textColor="@color/navyblue"
-                    app:layout_constraintTop_toBottomOf="@id/button_resto"
-                    app:layout_constraintStart_toStartOf="@id/button_resto"/>
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_kulinerlain"
+                    app:iconPadding="16dp"
+                    app:iconTint="@color/navyblue"
+                    app:layout_constraintEnd_toEndOf="@id/button_resto"
+                    app:layout_constraintStart_toStartOf="@id/button_resto"
+                    app:layout_constraintTop_toBottomOf="@id/button_resto" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

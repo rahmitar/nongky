@@ -1,13 +1,10 @@
 package com.noobee.nongky.ui.list
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.noobee.nongky.databinding.ActivityListKategoriBinding
 import com.noobee.nongky.databinding.ItemListTempatMakanBinding
-import com.noobee.nongky.model.Data
-import com.noobee.nongky.ui.home.RecyclerViewListDetailTempatMakanAdapter
+import com.noobee.nongky.model.DataCafe
 
 class RecylerViewListKategoriAdapter(
     val listKategoriViewModel: ListKategoriViewModel
@@ -15,7 +12,7 @@ class RecylerViewListKategoriAdapter(
 
     inner class ViewHolder(val binding: ItemListTempatMakanBinding) : RecyclerView.ViewHolder(binding.root)
 
-    var listItem : List<Data>? = null
+    var listItem : List<DataCafe>? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

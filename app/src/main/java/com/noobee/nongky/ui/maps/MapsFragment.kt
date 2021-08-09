@@ -135,7 +135,7 @@ class MapsFragment : Fragment() {
                 googleMap.addCircle(
                     CircleOptions()
                         .center(LatLng(it.latitude, it.longitude))
-                        .radius(2000.0)
+                        .radius(1000.0)
                         .strokeWidth(5f)
                         .strokeColor(Color.BLUE)
                         .fillColor(Color.argb(128, 0, 0, 255))

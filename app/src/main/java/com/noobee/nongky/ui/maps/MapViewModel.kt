@@ -1,10 +1,8 @@
 package com.noobee.nongky.ui.maps
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.noobee.nongky.model.CCoordinate
-import com.noobee.nongky.model.Data
+import com.noobee.nongky.model.DataCafe
 import com.noobee.nongky.repository.CafeRepository
 import com.noobee.nongky.ui.BaseViewModel
 import com.noobee.nongky.util.Resource
@@ -24,7 +22,7 @@ class MapViewModel @Inject constructor(
         const val ACTION_MAP_LIST_READY = "action_map_list_ready"
     }
 
-    val listTitikCafe = ArrayList<Data>()
+    val listTitikCafe = ArrayList<DataCafe>()
     val areListReady = MutableLiveData<Boolean>()
     val latitudeUser = MutableLiveData<Double>()
     val longitudeUser = MutableLiveData<Double>()
@@ -45,7 +43,7 @@ class MapViewModel @Inject constructor(
                             response.dataResource.data?.forEach {
                                 it.c_distance = haversine(latitudeUser.value?:0.0,longitudeUser.value?:0.0,it.c_coordinate)
 
-                                if(it.c_distance?: 0.0 <= 2.0){
+                                if(it.c_distance?: 0.0 <= 1.0){
                                     listTitikCafe.add(it)
                                 }
 

@@ -10,6 +10,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.noobee.nongky.BuildConfig
 import com.noobee.nongky.R
 import com.noobee.nongky.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mainActivityBinding: ActivityMainBinding
+
+    data class User(val name: String, val address: String)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

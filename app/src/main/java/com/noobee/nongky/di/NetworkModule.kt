@@ -1,5 +1,8 @@
 package com.noobee.nongky.di
 
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
 import com.noobee.nongky.BuildConfig
 import com.noobee.nongky.util.Constant
@@ -38,4 +41,5 @@ object NetworkModule {
         val gson = GsonBuilder().setLenient().create()
         return Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson)).baseUrl(baseUrl).client(okHttpClient).build()
     }
+
 }
